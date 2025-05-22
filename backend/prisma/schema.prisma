@@ -1,20 +1,28 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "mysql" // ou "postgresql", "sqlite", etc.
+  url      = env("DATABASE_URL")
+}
+
 model Usuario {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  senha String
+  id       Int      @id @default(autoincrement())
+  nome     String
+  email    String   @unique
+  senha    String
+  artigos  Artigo[]
+}
+
+model Artigo {
+  id              Int      @id @default(autoincrement())
+  titulo          String
+  conteudo        String   @db.Text // caso o conteúdo seja longo
+  dataPublicacao  DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+  imagemDestaque  String?  // URL da imagem (opcional)
+  
+  autorId Int
+  autor   Usuario  @relation(fields: [autorId], references: [id])
 }

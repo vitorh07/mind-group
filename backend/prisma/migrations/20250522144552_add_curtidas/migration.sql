@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `artigo` ADD COLUMN `curtidas` INTEGER NOT NULL DEFAULT 0;

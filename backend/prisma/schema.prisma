@@ -18,10 +18,11 @@ model Usuario {
 model Artigo {
   id              Int      @id @default(autoincrement())
   titulo          String
-  conteudo        String   @db.Text // caso o conteúdo seja longo
+  conteudo        String   @db.Text
   dataPublicacao  DateTime @default(now())
   dataAtualizacao DateTime @updatedAt
-  imagemDestaque  String?  // URL da imagem (opcional)
+  imagemDestaque  String?  
+  curtidas        Int      @default(0)
   
   autorId Int
   autor   Usuario  @relation(fields: [autorId], references: [id])
